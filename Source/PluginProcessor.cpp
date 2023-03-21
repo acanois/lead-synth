@@ -116,8 +116,8 @@ void LeadSynthAudioProcessor::processBlock(
 ) {
     juce::ScopedNoDenormals noDenormals;
     
-    mpVoice->setFrequency(220.0);
-    mpVoice->setLevel(0.4f);
+    mpVoice->setFrequency(110.f);
+    mpVoice->setLevel(0.5f);
     mpVoice->renderNextBlock(buffer, 0, buffer.getNumSamples());
 }
 

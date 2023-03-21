@@ -56,13 +56,6 @@ void LeadVoice::renderNextBlock(
     int startSample,
     int numSamples
 ) {
-    setLevel(0.2f);
-    setFrequency(440.f);
-    
-//    auto foldBuffer = mFolder->passThru(outputBuffer);
-//    auto foldBuffer = mFolder->processBlock(outputBuffer);
-//    auto block = juce::dsp::AudioBlock<float>(foldBuffer);
-    
     auto block = juce::dsp::AudioBlock<float>(outputBuffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
     mProcessorChain.process(context);
