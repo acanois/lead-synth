@@ -43,18 +43,22 @@ void LeadVoice::prepareSpec(double sampleRate, int samplesPerBlock, int numOutpu
     mSpec.numChannels = numOutputChannels;
     mProcessorChain.prepare(mSpec);
     
-    mFolder = std::make_unique<WaveFolder>(mSpec);
+//    mFolder = std::make_unique<WaveFolder>(mSpec);
 }
 
 void LeadVoice::renderNextBlock(
-    juce::AudioBuffer<float> &outputBuffer,
+    juce::AudioBuffer<float>& outputBuffer,
     int startSample,
     int numSamples
 ) {
-    setLevel(0.2);
-    setFrequency(220.0);
-    auto foldBuffer = mFolder->process_block(outputBuffer);
-    auto block = juce::dsp::AudioBlock<float>(foldBuffer);
+    setLevel(0.2f);
+    setFrequency(440.f);
+    
+//    auto foldBuffer = mFolder->passThru(outputBuffer);
+//    auto foldBuffer = mFolder->processBlock(outputBuffer);
+//    auto block = juce::dsp::AudioBlock<float>(foldBuffer);
+    
+    auto block = juce::dsp::AudioBlock<float>(outputBuffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
     mProcessorChain.process(context);
 }

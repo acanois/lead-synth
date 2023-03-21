@@ -16,7 +16,8 @@ class WaveFolder {
 public:
     WaveFolder(const juce::dsp::ProcessSpec& spec);
     
-    juce::AudioBuffer<float> process_block(juce::AudioBuffer<float>& buffer);
+    juce::AudioBuffer<float> processBlock(juce::AudioBuffer<float>& buffer);
+    juce::AudioBuffer<float> passThru(juce::AudioBuffer<float>& buffer);
     
 private:
     float processSample(float sample);

@@ -16,23 +16,35 @@ WaveFolder::WaveFolder(const juce::dsp::ProcessSpec& spec)
     : mSpec(spec)
 { }
 
-juce::AudioBuffer<float> WaveFolder::process_block(juce::AudioBuffer<float>& buffer) {
+juce::AudioBuffer<float> WaveFolder::processBlock(juce::AudioBuffer<float>& buffer) {
+//    for (auto i = 0; i < buffer.getNumSamples(); ++i) {
+//        auto current = buffer.getWritePointer(0, i);
+//        *current = processSample(*current);
+//    }
+//
+//    return buffer;
     auto outputBuffer = juce::AudioBuffer<float>();
     outputBuffer.setSize(1, buffer.getNumSamples());
-    
+
     for (auto i = 0; i < buffer.getNumSamples(); ++i) {
-        auto current = buffer.getWritePointer(0, i);
+        auto current = buffer.getReadPointer(0, i);
+        DBG(*current);
         auto foldedSample = processSample(*current);
-        outputBuffer.addSample(0, i, foldedSample);
+        outputBuffer.setSample(0, i, foldedSample);
     }
     
     return outputBuffer;
 }
 
 float WaveFolder::processSample(float sample) {
-    auto nyquist = mSpec.sampleRate / 2;
-    auto tan_sum = (tanh(sample) * 2.f) * 0.9f;
-    auto sineSample = sample * sin((2.f * juce::MathConstants<double>::pi) *
-                                     (nyquist / mSpec.sampleRate));
-    return tan_sum + sineSample;
+//    auto nyquist = mSpec.sampleRate / 2;
+//    auto tan_sum = (tanh(sample) * 2.f) * 0.9f;
+//
+//    return tan_sum + sample;
+    return sample;
+}
+
+juce::AudioBuffer<float> WaveFolder::passThru(juce::AudioBuffer<float>& buffer) {
+    DBG(*buffer.getReadPointer(0));
+    return buffer;
 }

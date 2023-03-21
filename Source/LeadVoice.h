@@ -11,7 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "WaveFolder.h"
+//#include "WaveFolder.h"
 
 class LeadVoice : public juce::SynthesiserVoice {
 public:
@@ -39,11 +39,16 @@ public:
 private:
     enum {
         oscillator,
+        waveShaper,
         gain,
     };
     
     juce::dsp::ProcessSpec mSpec;
-    juce::dsp::ProcessorChain<juce::dsp::Oscillator<float>, juce::dsp::Gain<float>> mProcessorChain;
+    juce::dsp::ProcessorChain<
+        juce::dsp::Oscillator<float>,
+        juce::dsp::WaveShaper<float>,
+        juce::dsp::Gain<float>
+    > mProcessorChain;
     
-    std::unique_ptr<WaveFolder> mFolder;
+//    std::unique_ptr<WaveFolder> mFolder;
 };
