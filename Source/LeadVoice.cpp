@@ -12,7 +12,12 @@
 
 LeadVoice::LeadVoice() {
     auto& osc = mProcessorChain.template get<oscillator>();
+    auto& shaper = mProcessorChain.template get<waveShaper>();
+    
     osc.initialise ([] (float x) { return std::sin (x); }, 128);
+    shaper.functionToUse = [] (float x) {
+        return tanh(x) + sin(x * (2.f * juce::MathConstants<float>::pi));
+    };
 }
 
 bool LeadVoice::canPlaySound(juce::SynthesiserSound* leadSound) {
