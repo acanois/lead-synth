@@ -47,8 +47,6 @@ void LeadVoice::prepareSpec(double sampleRate, int samplesPerBlock, int numOutpu
     mSpec.maximumBlockSize = samplesPerBlock;
     mSpec.numChannels = numOutputChannels;
     mProcessorChain.prepare(mSpec);
-    
-//    mFolder = std::make_unique<WaveFolder>(mSpec);
 }
 
 void LeadVoice::renderNextBlock(
